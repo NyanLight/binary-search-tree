@@ -16,3 +16,11 @@ export function prettyPrint  (node, prefix = "", isLeft = true)  {
     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };
+
+export function getSuccessor(node) {
+  let succ = node.right;
+  while (succ !== null && succ.left !== null) {
+    succ = succ.left;
+  }
+  return succ;
+}
