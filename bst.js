@@ -86,9 +86,19 @@ export class Tree {
     }
     return (currentNode.data === value) ? currentNode : 'Not found';
   }
+
+  levelOrderIterative(callback) {
+    if (!callback) throw Error('Callback is required!');
+    let queque = [this.root];
+    while (queque.length > 0) {
+        const currentNode = queque[0];
+        callback(currentNode);
+        if (currentNode.left) queque.push(currentNode.left);
+        if (currentNode.right) queque.push(currentNode.right);
+        queque.shift();
+    }
+  }
 }
 
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-test.insert(2);
-console.log(prettyPrint(test.root));
-console.log(test.find(2));
+test.levelOrder();
