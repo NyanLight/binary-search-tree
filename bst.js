@@ -1,5 +1,5 @@
 import { Node } from "./node.js";
-import { prepareArray, prettyPrint } from "./util.js";
+import { prepareArray, prettyPrint, getSuccessor } from "./util.js";
 export class Tree {
   constructor(array) {
     this.array = prepareArray(array);
@@ -22,12 +22,10 @@ export class Tree {
     while (currentNode !== null) {
       prevNode = currentNode;
       if (value < currentNode.data) {
-        console.log("Current node is" + currentNode.data);
         prevNode = currentNode;
         currentNode = currentNode.left;
       } else if (value > currentNode.data) {
         {
-          console.log("Current node is" + currentNode.data);
           prevNode = currentNode;
           currentNode = currentNode.right;
         }
@@ -45,11 +43,41 @@ export class Tree {
       return;
     }
   }
+
+  delete(value, root = this.root, parentNode = null) {
+    if (root === null) return;
+    let direction = "right";
+    let currentNode = root;
+    while (currentNode.data !== value && currentNode !== null) {
+      parentNode = currentNode;
+      if (currentNode.data > value) {
+        direction = "left";
+        currentNode = currentNode.left;
+      } else if (currentNode.data < value) {
+        direction = "right";
+        currentNode = currentNode.right;
+      }
+    }
+    if (currentNode === null) {
+      return;
+    } else if (!currentNode.left && !currentNode.right) {
+      parentNode[direction] = null;
+    } else if (currentNode.left && !currentNode.right) {
+      parentNode[direction] = currentNode.left;
+      currentNode = currentNode.left;
+    } else if (currentNode.right && !currentNode.left) {
+      parentNode[direction] = currentNode.right;
+      currentNode = currentNode.right;
+    } else {
+      const succ = getSuccessor(currentNode);
+      currentNode.data = succ.data;
+      this.delete(currentNode.data, currentNode.right, currentNode);
+    }
+  }
 }
 
-
-
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log(prettyPrint(test.root));
 test.insert(2);
+console.log(prettyPrint(test.root));
+test.delete(228);
 console.log(prettyPrint(test.root));
