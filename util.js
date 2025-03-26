@@ -4,7 +4,7 @@ export function prepareArray(array) {
     return Array.from(set);
 }
 
-export function prettyPrint  (node, prefix = "", isLeft = true) => {
+export function prettyPrint  (node, prefix = "", isLeft = true)  {
   if (node === null) {
     return;
   }

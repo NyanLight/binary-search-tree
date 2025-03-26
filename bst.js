@@ -14,8 +14,40 @@ export class Tree {
     node.right = this.buildTree(array, mid + 1, end);
     return node;
   }
+
+  insert(value) {
+    let prevNode = null;
+    let currentNode = this.root;
+
+    while (currentNode !== null) {
+      prevNode = currentNode;
+      if (value < currentNode.data) {
+        console.log("Current node is" + currentNode.data);
+        prevNode = currentNode;
+        currentNode = currentNode.left;
+      } else if (value > currentNode.data) {
+        {
+          console.log("Current node is" + currentNode.data);
+          prevNode = currentNode;
+          currentNode = currentNode.right;
+        }
+      } else {
+        return;
+      }
+    }
+    if (prevNode.data > value) {
+      prevNode.left = new Node(value);
+      return;
+    } else if (prevNode.data < value) {
+      prevNode.right = new Node(value);
+      return;
+    } else {
+      return;
+    }
+  }
 }
 
-
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+console.log(prettyPrint(test.root));
+test.insert(2);
 console.log(prettyPrint(test.root));
