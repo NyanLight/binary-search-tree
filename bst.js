@@ -74,10 +74,21 @@ export class Tree {
       this.delete(currentNode.data, currentNode.right, currentNode);
     }
   }
+
+  find(value) {
+    let currentNode = this.root;
+    while (currentNode.data !== value && currentNode !== null) {
+        if (currentNode.data > value) {
+            currentNode = currentNode.left;
+        } else {
+            currentNode = currentNode.right;
+        }
+    }
+    return (currentNode.data === value) ? currentNode : 'Not found';
+  }
 }
 
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 test.insert(2);
 console.log(prettyPrint(test.root));
-test.delete(228);
-console.log(prettyPrint(test.root));
+console.log(test.find(2));
