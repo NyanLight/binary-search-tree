@@ -134,7 +134,16 @@ export class Tree {
     callback(node);
   }
 
-  height(node) {}
+  height(node) {
+    if (node === null) return -1;
+
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+
+    const height = Math.max(leftHeight, rightHeight) + 1;
+
+    return height;
+  }
 
   depth(node) {
     let depth = 0;
