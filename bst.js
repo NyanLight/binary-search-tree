@@ -136,12 +136,9 @@ export class Tree {
 
   height(node) {
     if (node === null) return -1;
-
     const leftHeight = this.height(node.left);
     const rightHeight = this.height(node.right);
-
     const height = Math.max(leftHeight, rightHeight) + 1;
-
     return height;
   }
 
@@ -160,10 +157,23 @@ export class Tree {
     return current.data === node.data ? depth : "Node is not found";
   }
 
-  isBalanced() {}
+  isBalanced() {
+    let isBalanced = true;
+    this.levelOrderIterative((node) => {
+      const leftHeight = this.height(node.left);
+      const rightHeight = this.height(node.right);
+      console.log(rightHeight + ": " + leftHeight);
+      const delta = Math.abs(rightHeight - leftHeight);
+      if (delta > 1) isBalanced = false;
+    }, this.root);
+    return isBalanced;
+  }
 
   rebalance() {}
 }
 
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+test.root.right.left.right.right = { data: 1, left: null, right: null };
+test.root.right.left.right.right.right = { data: 2, left: null, right: null };
 console.log(prettyPrint(test.root));
+console.log(test.isBalanced());
