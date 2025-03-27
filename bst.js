@@ -169,11 +169,19 @@ export class Tree {
     return isBalanced;
   }
 
-  rebalance() {}
+  rebalance() {
+    let values = [];
+    this.levelOrderIterative((node) => {
+      values.push(node.data);
+    });
+    this.root = this.buildTree(values, 0, values.length - 1);
+  }
 }
 
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 test.root.right.left.right.right = { data: 1, left: null, right: null };
 test.root.right.left.right.right.right = { data: 2, left: null, right: null };
 console.log(prettyPrint(test.root));
+console.log(test.isBalanced());
+test.rebalance();
 console.log(test.isBalanced());
