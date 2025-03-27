@@ -162,7 +162,6 @@ export class Tree {
     this.levelOrderIterative((node) => {
       const leftHeight = this.height(node.left);
       const rightHeight = this.height(node.right);
-      console.log(rightHeight + ": " + leftHeight);
       const delta = Math.abs(rightHeight - leftHeight);
       if (delta > 1) isBalanced = false;
     }, this.root);
@@ -179,4 +178,4 @@ export class Tree {
 }
 
 const tree = new Tree(Array.from({length: 100}, () => Math.floor(Math.random() * 100)))
-tree.isBalanced();
+console.log(tree.isBalanced());
