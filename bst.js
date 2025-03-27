@@ -109,7 +109,17 @@ export class Tree {
     queque.shift();
     this.levelOrderRecursive(callback, queque);
   }
+
+  preOrder(callback, node = this.root) {
+    if (!callback) throw Error('Callback is required');
+    if (node === null) return;
+    callback(node);
+    this.preOrder(callback, node.left);
+    this.preOrder(callback, node.right);
+  }
+
 }
 
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-test.levelOrderRecursive((node) => console.log(node.data));
+console.log(prettyPrint(test.root));
+test.preOrder((node) => console.log(node.data));
