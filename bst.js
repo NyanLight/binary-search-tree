@@ -78,27 +78,38 @@ export class Tree {
   find(value) {
     let currentNode = this.root;
     while (currentNode.data !== value && currentNode !== null) {
-        if (currentNode.data > value) {
-            currentNode = currentNode.left;
-        } else {
-            currentNode = currentNode.right;
-        }
+      if (currentNode.data > value) {
+        currentNode = currentNode.left;
+      } else {
+        currentNode = currentNode.right;
+      }
     }
-    return (currentNode.data === value) ? currentNode : 'Not found';
+    return currentNode.data === value ? currentNode : "Not found";
   }
 
   levelOrderIterative(callback) {
-    if (!callback) throw Error('Callback is required!');
+    if (!callback) throw Error("Callback is required!");
     let queque = [this.root];
     while (queque.length > 0) {
-        const currentNode = queque[0];
-        callback(currentNode);
-        if (currentNode.left) queque.push(currentNode.left);
-        if (currentNode.right) queque.push(currentNode.right);
-        queque.shift();
+      const currentNode = queque[0];
+      callback(currentNode);
+      if (currentNode.left) queque.push(currentNode.left);
+      if (currentNode.right) queque.push(currentNode.right);
+      queque.shift();
     }
+  }
+
+  levelOrderRecursive(callback, queque = [this.root]) {
+    if (!callback) throw Error("Callback is required!");
+    if (queque.length === 0) return;
+    const currentNode = queque[0];
+    callback(currentNode);
+    if (currentNode.left) queque.push(currentNode.left);
+    if (currentNode.right) queque.push(currentNode.right);
+    queque.shift();
+    this.levelOrderRecursive(callback, queque);
   }
 }
 
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-test.levelOrder();
+test.levelOrderRecursive((node) => console.log(node.data));
