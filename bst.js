@@ -178,4 +178,3 @@ export class Tree {
 }
 
 const tree = new Tree(Array.from({length: 100}, () => Math.floor(Math.random() * 100)))
-console.log(tree.isBalanced());
