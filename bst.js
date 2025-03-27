@@ -111,7 +111,7 @@ export class Tree {
   }
 
   preOrder(callback, node = this.root) {
-    if (!callback) throw Error('Callback is required');
+    if (!callback) throw Error("Callback is required");
     if (node === null) return;
     callback(node);
     this.preOrder(callback, node.left);
@@ -119,7 +119,7 @@ export class Tree {
   }
 
   inOrder(callback, node = this.root) {
-    if (!callback) throw Error('Callback is required');
+    if (!callback) throw Error("Callback is required");
     if (node === null) return;
     this.inOrder(callback, node.left);
     callback(node);
@@ -127,15 +127,34 @@ export class Tree {
   }
 
   postOrder(callback, node = this.root) {
-    if (!callback) throw Error('Callback is required');
+    if (!callback) throw Error("Callback is required");
     if (node === null) return;
     this.postOrder(callback, node.left);
     this.postOrder(callback, node.right);
     callback(node);
   }
 
+  height(node) {}
+
+  depth(node) {
+    let depth = 0;
+    let current = this.root;
+    while (current.data !== node.data && current !== null) {
+      if (current.data < node.data) {
+        current = current.right;
+        ++depth;
+      } else {
+        current = current.left;
+        ++depth;
+      }
+    }
+    return current.data === node.data ? depth : "Node is not found";
+  }
+
+  isBalanced() {}
+
+  rebalance() {}
 }
 
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 console.log(prettyPrint(test.root));
-test.postOrder((node) => console.log(node.data));
