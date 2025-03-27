@@ -118,8 +118,24 @@ export class Tree {
     this.preOrder(callback, node.right);
   }
 
+  inOrder(callback, node = this.root) {
+    if (!callback) throw Error('Callback is required');
+    if (node === null) return;
+    this.inOrder(callback, node.left);
+    callback(node);
+    this.inOrder(callback, node.right);
+  }
+
+  postOrder(callback, node = this.root) {
+    if (!callback) throw Error('Callback is required');
+    if (node === null) return;
+    this.postOrder(callback, node.left);
+    this.postOrder(callback, node.right);
+    callback(node);
+  }
+
 }
 
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 console.log(prettyPrint(test.root));
-test.preOrder((node) => console.log(node.data));
+test.postOrder((node) => console.log(node.data));
